@@ -31,6 +31,16 @@ function getComputerChoice() {
     return rand = Math.ceil(Math.random() * 3);
 }
 
+function getPlayerChoice() {
+    return new Promise(resolve => {
+        const buttons = document.querySelectorAll(".choice-button");
+        buttons.forEach(button => {
+            button.addEventListener("click", () => {
+                resolve(button);
+            });
+        });
+    });
+}
 
 function displayChoice(currentChoice) {
     const choiceDisplay = document.querySelector(".display-choice");
@@ -83,41 +93,87 @@ function resetButtonsScale() {
     });
 }
 
-function setScore() {
-    const computerScoreDisplay = document.querySelector(".computer-score");
-    const playerScoreDisplay = document.querySelector(".player-score");
+function getScore(playerChoice, computerChoice) {
+    let playerScore = 0;
+    let computerScore = 0;
+
+    if ((playerChoice + 1) % 3 === computerChoice) {
+        computerScore++;
+    } else if ((playerChoice + 2) % 3 === computerChoice) {
+        playerScore++;
+    } else {
+    }
+
+    console.log(`playerChoice = ${playerChoice}`);
+    //  console.log(`playerScore = ${playerScore}`);
+    console.log(`computerChoice = ${computerChoice}`);
+    //  console.log(`computerScore = ${computerScore}`);
+
+    return [playerScore, computerScore];
 }
 
-function playOneRound(button) {
+async function playOneRound() {
+    const choiceDisplay = document.querySelector(".display-choice");
+    const button = await getPlayerChoice();
     button.style.border = "2px solid rgba(215, 0, 30, 0.7)";
 
-    const choiceDisplay = document.querySelector(".display-choice");
     const playerChoice = parseInt(button.id);
-    const computerChoice = getComputerChoice();
-
+    let computerChoice;
     // Players Turn
     displayChoice(playerChoice);
 
     // Computers Turn
     let computerButton;
-    setTimeout(() => {
-        resetButtonsScale();
-        choiceDisplay.innerText = "Computer chooses...";
 
+    return new Promise(resolve => {
         setTimeout(() => {
-            computerButton = controlComputerButton(computerChoice);
-            displayChoice(computerChoice);
+            resetButtonsScale();
+            choiceDisplay.innerText = "Computer chooses...";
 
             setTimeout(() => {
-                resetButtonsScale();
-                button.style.border = "0px";
-                computerButton.style.border = "0px";
-                choiceDisplay.innerText = "Player chooses...";
+                computerChoice = getComputerChoice();
+                console.log(`computerChoice directly after getComputerChoice = ${computerChoice}`);
+                computerButton = controlComputerButton(computerChoice);
+                displayChoice(computerChoice);
+
+                setTimeout(() => {
+                    resetButtonsScale();
+                    button.style.border = "0px";
+                    computerButton.style.border = "0px";
+                    choiceDisplay.innerText = "Player chooses...";
+                    console.log(`computerChoice at end of timeouts = ${computerChoice}`);
+                    resolve([playerChoice, computerChoice]);
+                }, 1000);
+
             }, 2000);
 
-        }, 3000);
+        }, 2000);
+    });
+}
 
-    }, 2000);
+async function playOneGame() {
+    const playerTotalDisplay = document.querySelector(".player-score");
+    const computerTotalDisplay = document.querySelector(".computer-score");
+    let playerTotal = 0;
+    let computerTotal = 0;
+    let playerScore = 0;
+    let computerScore = 0;
 
+    while (playerTotal < 2 && computerTotal < 2) {
+        let choices = await playOneRound();
+
+        [playerScore, computerScore] = getScore(choices[0], choices[1]);
+
+        playerTotal = playerTotal + playerScore;
+        computerTotal = computerTotal + computerScore;
+
+        playerTotalDisplay.innerText = `${playerTotal}`;
+        computerTotalDisplay.innerText = `${computerTotal}`;
+
+        playerScore = 0;
+        computerScore = 0;
+    }
 
 }
+
+playOneGame();
