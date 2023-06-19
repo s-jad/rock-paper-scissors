@@ -11,21 +11,21 @@
    <div class="outer-wrapper">
        <div class="hero-wrapper">
            <h1 class="hero-title">Choose Wisely...</h1>
-           <p class="hero-subtext"></p>
+           <p class="display-choice">Player chooses...</p>
        </div>
         <div class="options-wrapper">
-            <img src="images/" alt="A picture of a rock">
-            <img src="images/" alt="A picture of a sheet of paper">
-            <img src="images/" alt="A picture of scissors">
+            <button class="rock-button" onclick="playOneRound(this)" id="1"></button>
+            <button class="paper-button" onclick="playOneRound(this)" id="2"></button>
+            <button class="scissors-button" onclick="playOneRound(this)" id="3"></button>
         </div>
         <div class="score-wrapper">
             <div class="player-score-wrapper">
                 <h3 class="player-score-title">Player:</h3>
-                <p class="display-player-score"></p>
+                <p class="display-score player-score">0</p>
             </div>
             <div class="computer-score-wrapper">
                 <h3 class="computer-score-title">Computer:</h3>
-                <p class="display-computer-score"></p>
+                <p class="display-score computer-score">0</p>
             </div>
         </div>
    </div> 
