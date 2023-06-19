@@ -1,31 +1,31 @@
 // Checking how random the output of getComputerChoice really is
-function testGetComputerChoice() {
-    let ones = 0;
-    let twos = 0;
-    let threes = 0;
-    for (let i = 0; i < 10000; i++) {
+//function testGetComputerChoice() {
+//    let ones = 0;
+//    let twos = 0;
+//    let threes = 0;
+//    for (let i = 0; i < 10000; i++) {
+//
+//        let current = getComputerChoice();
+//
+//        switch (current) {
+//            case 1:
+//                ones++;
+//                break;
+//            case 2:
+//                twos++;
+//                break;
+//            case 3:
+//                threes++;
+//                break;
+//        }
+//    }
+//
+//    console.log(`Number of ones = ${ones}`);
+//    console.log(`Number of twos = ${twos}`);
+//    console.log(`Number of threes = ${threes}`);
+//}
 
-        let current = getComputerChoice();
-
-        switch (current) {
-            case 1:
-                ones++;
-                break;
-            case 2:
-                twos++;
-                break;
-            case 3:
-                threes++;
-                break;
-        }
-    }
-
-    console.log(`Number of ones = ${ones}`);
-    console.log(`Number of twos = ${twos}`);
-    console.log(`Number of threes = ${threes}`);
-}
-
-// Start of functions
+// Start of game
 
 function getComputerChoice() {
     return rand = Math.ceil(Math.random() * 3);
