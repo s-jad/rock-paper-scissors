@@ -138,12 +138,12 @@ async function playOneRound() {
                 setTimeout(() => {
                     resetButtons();
                     choiceDisplay.innerText = "Player chooses...";
+                    resolve({ playerChoice, computerChoice });
                 }, 1000);
 
             }, 2000);
 
         }, 2000);
-        resolve({ playerChoice, computerChoice });
     });
 }
 
