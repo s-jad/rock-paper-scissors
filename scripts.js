@@ -101,23 +101,17 @@ function getScore(playerChoice, computerChoice) {
         computerScore++;
     } else if ((playerChoice + 2) % 3 === computerChoice) {
         playerScore++;
-    } else {
     }
 
-    console.log(`playerChoice = ${playerChoice}`);
-    //  console.log(`playerScore = ${playerScore}`);
-    console.log(`computerChoice = ${computerChoice}`);
-    //  console.log(`computerScore = ${computerScore}`);
-
-    return [playerScore, computerScore];
+    return { playerScore, computerScore };
 }
 
 async function playOneRound() {
     const choiceDisplay = document.querySelector(".display-choice");
-    const button = await getPlayerChoice();
-    button.style.border = "2px solid rgba(215, 0, 30, 0.7)";
+    const playerButton = await getPlayerChoice();
+    playerButton.style.border = "2px solid rgba(215, 0, 30, 0.7)";
 
-    const playerChoice = parseInt(button.id);
+    const playerChoice = parseInt(playerButton.id);
     let computerChoice;
     // Players Turn
     displayChoice(playerChoice);
@@ -132,17 +126,15 @@ async function playOneRound() {
 
             setTimeout(() => {
                 computerChoice = getComputerChoice();
-                console.log(`computerChoice directly after getComputerChoice = ${computerChoice}`);
                 computerButton = controlComputerButton(computerChoice);
                 displayChoice(computerChoice);
 
                 setTimeout(() => {
                     resetButtonsScale();
-                    button.style.border = "0px";
+                    playerButton.style.border = "0px";
                     computerButton.style.border = "0px";
                     choiceDisplay.innerText = "Player chooses...";
-                    console.log(`computerChoice at end of timeouts = ${computerChoice}`);
-                    resolve([playerChoice, computerChoice]);
+                    resolve({ playerChoice, computerChoice });
                 }, 1000);
 
             }, 2000);
@@ -154,25 +146,29 @@ async function playOneRound() {
 async function playOneGame() {
     const playerTotalDisplay = document.querySelector(".player-score");
     const computerTotalDisplay = document.querySelector(".computer-score");
+    const popup = document.getElementById('popup');
+
     let playerTotal = 0;
     let computerTotal = 0;
-    let playerScore = 0;
-    let computerScore = 0;
 
     while (playerTotal < 2 && computerTotal < 2) {
         let choices = await playOneRound();
 
-        [playerScore, computerScore] = getScore(choices[0], choices[1]);
+        let {playerScore, computerScore} = getScore(choices.playerChoice, choices.computerChoice);
 
         playerTotal = playerTotal + playerScore;
         computerTotal = computerTotal + computerScore;
 
         playerTotalDisplay.innerText = `${playerTotal}`;
         computerTotalDisplay.innerText = `${computerTotal}`;
-
-        playerScore = 0;
-        computerScore = 0;
     }
+
+    setTimeout(() => {
+        popup.style.display = 'block';
+        popup.style.opacity = "1.0";
+
+    }, 2000);
+
 
 }
 
