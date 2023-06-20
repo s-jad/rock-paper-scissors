@@ -33,9 +33,9 @@ function getComputerChoice() {
 
 function getPlayerChoice() {
     return new Promise(resolve => {
-        const buttons = document.querySelectorAll(".choice-button");
+        const buttons = document.querySelectorAll('.choice-button');
         buttons.forEach(button => {
-            button.addEventListener("click", () => {
+            button.addEventListener('click', () => {
                 resolve(button);
             });
         });
@@ -43,20 +43,20 @@ function getPlayerChoice() {
 }
 
 function displayChoice(currentChoice) {
-    const choiceDisplay = document.querySelector(".display-choice");
-    let choice = "";
+    const choiceDisplay = document.querySelector('.display-choice');
+    let choice = '';
 
     switch (currentChoice) {
         case 1:
-            choice = "rock";
+            choice = 'rock';
             break;
 
         case 2:
-            choice = "paper";
+            choice = 'paper';
             break;
 
         case 3:
-            choice = "scissors";
+            choice = 'scissors';
             break;
     }
 
@@ -66,31 +66,31 @@ function displayChoice(currentChoice) {
 function controlComputerButton(computerChoice) {
     switch (computerChoice) {
         case 1:
-            const buttonOne = document.querySelector(".rock-button");
-            buttonOne.style.transform = "scale(1.1)";
-            buttonOne.style.border = "2px solid rgba(30, 210, 215, 0.7)";
+            const buttonOne = document.querySelector('.rock-button');
+            buttonOne.style.transform = 'scale(1.1)';
+            buttonOne.style.border = '2px solid rgba(30, 210, 215, 0.7)';
             return buttonOne;
 
         case 2:
-            const buttonTwo = document.querySelector(".paper-button");
-            buttonTwo.style.transform = "scale(1.1)";
-            buttonTwo.style.border = "2px solid rgba(30, 210, 215, 0.7)";
+            const buttonTwo = document.querySelector('.paper-button');
+            buttonTwo.style.transform = 'scale(1.1)';
+            buttonTwo.style.border = '2px solid rgba(30, 210, 215, 0.7)';
             return buttonTwo;
 
         case 3:
-            const buttonThree = document.querySelector(".scissors-button");
-            buttonThree.style.transform = "scale(1.1)";
-            buttonThree.style.border = "2px solid rgba(30, 210, 215, 0.7)";
+            const buttonThree = document.querySelector('.scissors-button');
+            buttonThree.style.transform = 'scale(1.1)';
+            buttonThree.style.border = '2px solid rgba(30, 210, 215, 0.7)';
             return buttonThree;
     }
 }
 
 function resetButtons() {
-    const buttons = document.querySelectorAll(".choice-button");
+    const buttons = document.querySelectorAll('.choice-button');
 
     buttons.forEach(button => {
-        button.style.transform = "scale(1)";
-        button.style.border = "0px";
+        button.style.transform = 'scale(1)';
+        button.style.border = '0px';
     });
 }
 
@@ -114,12 +114,12 @@ function getScore(playerChoice, computerChoice) {
 }
 
 async function playOneRound() {
-    const choiceDisplay = document.querySelector(".display-choice");
+    const choiceDisplay = document.querySelector('.display-choice');
 
     // Players Turn
     const playerButton = await getPlayerChoice();
 
-    playerButton.style.border = "2px solid rgba(215, 0, 30, 0.7)";
+    playerButton.style.border = '2px solid rgba(215, 0, 30, 0.7)';
     const playerChoice = parseInt(playerButton.id);
     displayChoice(playerChoice);
 
@@ -129,7 +129,7 @@ async function playOneRound() {
 
     return new Promise(resolve => {
         setTimeout(() => {
-            choiceDisplay.innerText = "Computer chooses...";
+            choiceDisplay.innerText = 'Computer chooses...';
 
             setTimeout(() => {
                 computerButton = controlComputerButton(computerChoice);
@@ -137,7 +137,7 @@ async function playOneRound() {
 
                 setTimeout(() => {
                     resetButtons();
-                    choiceDisplay.innerText = "Player chooses...";
+                    choiceDisplay.innerText = 'Player chooses...';
                     resolve({ playerChoice, computerChoice });
                 }, 1000);
 
@@ -148,8 +148,8 @@ async function playOneRound() {
 }
 
 async function playOneGame() {
-    const playerTotalDisplay = document.querySelector(".player-score");
-    const computerTotalDisplay = document.querySelector(".computer-score");
+    const playerTotalDisplay = document.querySelector('.player-score');
+    const computerTotalDisplay = document.querySelector('.computer-score');
     const popup = document.getElementById('popup');
 
     let playerTotal = 0;
@@ -169,14 +169,14 @@ async function playOneGame() {
 
     setTimeout(() => {
         popup.style.display = 'block';
-        popup.style.opacity = "1.0";
+        popup.style.opacity = '1.0';
 
         if (playerTotal > computerTotal) {
-            popup.innerHTML = "Congratulations, you won!";
+            popup.innerHTML = 'Congratulations, you won!';
         } else if (playerTotal < computerTotal) {
-            popup.innerHTML = "Sorry, better luck next time!";
+            popup.innerHTML = 'Sorry, better luck next time!';
         } else {
-            popup.innerHTML = "Wait, how did we end up here?!";
+            popup.innerHTML = 'Wait, how did we end up here?!';
         }
 
     }, 2000);
